@@ -1,6 +1,8 @@
 # Parc Boréalis - C'est quoi
-Parc simulant quelques serveurs usuels pour le cours de cyber 3.
+Parc simulant quelques serveurs vulnérables usuels pour le cours de cyber 3.
 On s'en sert pour identifier des vulnérabilités.
+> [!CAUTION]
+> Ce parc contient des services ayant délibérément des vulnérabilités critiques. Ne surtout pas l'utiliser dans un environnement hors-classe !
 
 # Utilisation
 Pré-requis: une machine LINUX avec Docker d'installé.
