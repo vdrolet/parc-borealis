@@ -36,6 +36,9 @@ services:
   intranet:
     build:
       context: .
+      args:
+        - PARC_IFACE=${PARC_IFACE:?Erreur! La variable PARC_IFACE n'est pas définie. As-tu ton fichier .env?}
+        - STUDENT_ID=${STUDENT_ID:?Erreur! La variable STUDENT_ID n'est pas définie. As-tu ton fichier .env?}
       dockerfile: intranet-Dockerfile
     image: borealis/intranet:apache-2.4.49
     pull_policy: build
