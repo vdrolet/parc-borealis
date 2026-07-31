@@ -1,0 +1,50 @@
+# intranet — cible de scan Nessus (Boréalis Imprimerie)
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 1 — génération du certificat expiré
+# faketime recule l'horloge pendant la génération : le certificat naît déjà
+# périmé, sans jamais toucher l'horloge du conteneur à l'exécution.
+# ═════════════════════════════════════════════════════════════════════════════
+FROM debian:12-slim AS certgen
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        faketime \
+        openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN faketime '2020-01-01 00:00:00' \
+    openssl req -x509 -nodes -newkey rsa:2048 -days 365 -sha256 \
+        -keyout /tmp/server.key \
+        -out    /tmp/server.crt \
+        -subj "/C=CA/ST=Quebec/L=Montreal/O=Borealis Imprimerie/OU=vdrolet/CN=intranet.borealis.local" \
+ && openssl x509 -in /tmp/server.crt -noout -dates
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Stage 2 — serveur web vulnérable
+# ═════════════════════════════════════════════════════════════════════════════
+FROM httpd:2.4.49
+
+# Contenu du site intranet
+COPY index.html /usr/local/apache2/htdocs/index.html
+
+# Certificat (chemins par défaut attendus par conf/extra/httpd-ssl.conf)
+COPY --from=certgen /tmp/server.crt /usr/local/apache2/conf/server.crt
+COPY --from=certgen /tmp/server.key /usr/local/apache2/conf/server.key
+
+# Activation de mod_ssl (commenté par défaut dans l'image officielle httpd)
+RUN sed -i \
+    -e 's|^#\(LoadModule ssl_module \)|\1|' \
+    -e 's|^#\(LoadModule socache_shmcb_module \)|\1|' \
+    -e 's|^#\(Include conf/extra/httpd-ssl.conf\)|\1|' \
+    -e 's|^#\?\(ServerName \).*|\1intranet.borealis.local:80|' \
+    /usr/local/apache2/conf/httpd.conf \
+ && /usr/local/apache2/bin/httpd -t
+
+# ─── Config path traversal ───────────────
+RUN printf '%s\n' \
+    '<Directory />' \
+    '    Require all granted' \
+    '</Directory>' \
+    >> /usr/local/apache2/conf/httpd.conf
+
+EXPOSE 80 443

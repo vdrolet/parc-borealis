@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intranet — Boréalis Imprimerie</title>
+<style>
+  :root{
+    --paper:#f2ede3;
+    --ink:#1c1a17;
+    --ink-soft:#4a453d;
+    --press-red:#a4302b;
+    --press-red-dark:#7c2320;
+    --line:#d8cfbc;
+    --card:#faf7f0;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    line-height:1.55;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.035) 1px, transparent 0);
+    background-size:14px 14px;
+  }
+
+  header{
+    border-bottom:3px solid var(--ink);
+    padding:1.6rem 2rem 1.2rem;
+    display:flex;
+    align-items:center;
+    gap:1.1rem;
+    background:var(--paper);
+  }
+
+  .logo-mark{
+    width:52px;
+    height:52px;
+    flex-shrink:0;
+  }
+
+  .brand{
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
+  }
+
+  .brand-name{
+    font-size:1.6rem;
+    letter-spacing:0.02em;
+    font-weight:700;
+  }
+
+  .brand-sub{
+    font-family:"Courier New",monospace;
+    font-size:0.72rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--press-red);
+    margin-top:0.15rem;
+  }
+
+  nav{
+    margin-left:auto;
+    display:flex;
+    gap:1.6rem;
+    font-family:"Courier New",monospace;
+    font-size:0.8rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+
+  nav a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding-bottom:3px;
+    border-bottom:2px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+
+  nav a:hover, nav a:focus-visible{
+    color:var(--press-red);
+    border-color:var(--press-red);
+  }
+
+  main{
+    max-width:960px;
+    margin:0 auto;
+    padding:2.6rem 2rem 4rem;
+  }
+
+  .hero{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:2rem;
+    align-items:end;
+    border-bottom:1px solid var(--line);
+    padding-bottom:2rem;
+    margin-bottom:2.4rem;
+  }
+
+  .hero h1{
+    font-size:2.6rem;
+    line-height:1.05;
+    max-width:16ch;
+  }
+
+  .hero p{
+    color:var(--ink-soft);
+    margin-top:0.8rem;
+    max-width:42ch;
+  }
+
+  .stamp{
+    font-family:"Courier New",monospace;
+    font-size:0.7rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    border:1px solid var(--press-red);
+    color:var(--press-red);
+    padding:0.5rem 0.8rem;
+    transform:rotate(-2deg);
+    white-space:nowrap;
+    align-self:start;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.4rem;
+    margin-bottom:2.6rem;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:1.3rem 1.4rem;
+    position:relative;
+  }
+
+  .card::before{
+    content:attr(data-tag);
+    display:block;
+    font-family:"Courier New",monospace;
+    font-size:0.68rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--press-red);
+    margin-bottom:0.6rem;
+  }
+
+  .card h3{
+    font-size:1.05rem;
+    margin-bottom:0.4rem;
+  }
+
+  .card p{
+    color:var(--ink-soft);
+    font-size:0.92rem;
+  }
+
+  section.block{
+    margin-bottom:2.4rem;
+  }
+
+  section.block h2{
+    font-size:1.05rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    font-family:"Courier New",monospace;
+    color:var(--ink-soft);
+    border-bottom:1px solid var(--line);
+    padding-bottom:0.5rem;
+    margin-bottom:1rem;
+  }
+
+  .announce-list{
+    list-style:none;
+  }
+
+  .announce-list li{
+    display:grid;
+    grid-template-columns:100px 1fr;
+    gap:1rem;
+    padding:0.7rem 0;
+    border-bottom:1px dashed var(--line);
+  }
+
+  .announce-list li:last-child{
+    border-bottom:none;
+  }
+
+  .announce-date{
+    font-family:"Courier New",monospace;
+    font-size:0.78rem;
+    color:var(--press-red);
+    white-space:nowrap;
+  }
+
+  .contacts{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:0.6rem 2rem;
+    font-size:0.92rem;
+  }
+
+  .contacts div{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding:0.45rem 0;
+  }
+
+  .contacts span:last-child{
+    color:var(--ink-soft);
+    font-family:"Courier New",monospace;
+    font-size:0.85rem;
+  }
+
+  footer{
+    text-align:center;
+    font-family:"Courier New",monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    letter-spacing:0.05em;
+    padding:1.6rem 1rem 2.4rem;
+    text-transform:uppercase;
+  }
+
+  @media (max-width:720px){
+    .hero{grid-template-columns:1fr;}
+    .grid{grid-template-columns:1fr;}
+    .contacts{grid-template-columns:1fr;}
+    nav{flex-wrap:wrap;gap:0.9rem;}
+    header{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Boréalis Imprimerie">
+    <rect x="4" y="4" width="92" height="92" fill="none" stroke="#1c1a17" stroke-width="3"/>
+    <path d="M20 78 L50 22 L80 78" fill="none" stroke="#a4302b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <line x1="32" y1="58" x2="68" y2="58" stroke="#1c1a17" stroke-width="4"/>
+  </svg>
+  <div class="brand">
+    <span class="brand-name">Boréalis Imprimerie</span>
+    <span class="brand-sub">Intranet interne</span>
+  </div>
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#annonces">Annonces</a>
+    <a href="#ressources">Ressources IT</a>
+    <a href="#contacts">Contacts</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="hero" id="accueil">
+    <div>
+      <h1>Bienvenue sur l'intranet</h1>
+      <p>Portail interne du personnel de Boréalis Imprimerie. Ressources, annonces et contacts du service informatique.</p>
+    </div>
+    <div class="stamp">Usage interne seulement</div>
+  </div>
+
+  <section class="block" id="annonces">
+    <h2>Annonces</h2>
+    <ul class="announce-list">
+      <li>
+        <span class="announce-date">2026-07-14</span>
+        <span>Fenêtre de maintenance planifiée sur le serveur de fichiers — sauvegardez vos documents avant 17h.</span>
+      </li>
+      <li>
+        <span class="announce-date">2026-06-30</span>
+        <span>Rappel : les mots de passe doivent être renouvelés tous les 90 jours. Contactez le TI en cas de doute.</span>
+      </li>
+      <li>
+        <span class="announce-date">2026-06-05</span>
+        <span>Nouveau formulaire de demande d'accès disponible auprès du service informatique.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block" id="ressources">
+    <h2>Ressources TI</h2>
+    <div class="grid">
+      <div class="card" data-tag="Réseau">
+        <h3>État du réseau</h3>
+        <p>Statut des services et disponibilité du parc.</p>
+		<p>Disponible bientôt !</p>
+      </div>
+      <div class="card" data-tag="Support">
+        <h3>Demande d'assistance</h3>
+        <p>Signaler un problème au service informatique.</p>
+		<p><a href="https://www.tiktok.com/@mnames_jeff/video/7282809153846807838">Créer un billet de support</a><p>
+		<a href="https://www.instagram.com/reel/DU3JI3Ij55K/">Suivi sur mon billet</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contacts">
+    <h2>Contacts</h2>
+    <div class="contacts">
+      <div><span>Service informatique</span><span>poste 204</span></div>
+      <div><span>Ressources humaines</span><span>poste 112</span></div>
+      <div><span>Réception</span><span>poste 100</span></div>
+      <div><span>Urgence technique</span><span>poste 911</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Boréalis Imprimerie — Réseau interne — Accès restreint au personnel autorisé
+</footer>
+
+</body>
+</html>

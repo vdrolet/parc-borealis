@@ -1,0 +1,93 @@
+# docker-compose.yml — kit-parc (Boréalis Imprimerie)
+# Bootstrap parc simulé, version 2026A
+## vdrolet
+# Réseau    : ESXi port group avec Promiscuous + Forged Transmits + MAC Changes = Accept
+# Variables définies dans le .env
+
+name: borealis
+
+# ───────────────────────────────────────────────────────────
+# Réseaux
+# ───────────────────────────────────────────────────────────
+networks:
+  parc:
+    name: parc-net
+    driver: macvlan
+    driver_opts:
+      parent: ${PARC_IFACE}
+    ipam:
+      config:
+        - subnet: 192.168.${STUDENT_ID}.0/24
+          gateway: 192.168.${STUDENT_ID}.1
+#  backplane:
+    # bridge interne pour services à composants
+#    name: backplane
+#    driver: bridge
+
+# ═══════════════════════════════════════════════════════════
+# Volumes
+# ═══════════════════════════════════════════════════════════
+
+
+# ═══════════════════════════════════════════════════════════
+# SERVICES — Profil par défaut (toujours actifs)
+# ═══════════════════════════════════════════════════════════
+services:
+  intranet:
+    build:
+      context: .
+      dockerfile: intranet-Dockerfile
+    image: borealis/intranet:apache-2.4.49
+    pull_policy: build
+    container_name: intranet
+    hostname: intranet.borealis.local
+    networks:
+      parc:
+        ipv4_address: 192.168.${STUDENT_ID}.50
+    restart: unless-stopped
+
+  ftp:
+    image: clintmint/vsftpd-2.3.4:1.0
+    container_name: ftp
+    hostname: ftp.borealis.local
+    stdin_open: true
+    tty: true
+    command: sh -c "start-vsftpd && sh"
+    networks:
+      parc:
+        ipv4_address: 192.168.${STUDENT_ID}.51
+    restart: unless-stopped
+
+  file:
+    image: dperson/samba:latest
+    container_name: file
+    hostname: file.borealis.local
+    networks:
+      parc:
+        ipv4_address: 192.168.${STUDENT_ID}.52
+    command: >
+      -S
+      -n
+      -g "server min protocol = NT1"
+      -g "client min protocol = NT1"
+      -s "public;/share;yes;no;yes"
+      -p
+    restart: unless-stopped
+
+  mail:
+    image: vulhub/opensmtpd:6.6.1p1
+    container_name: mail
+    hostname: mail.borealis.local
+    networks:
+      parc:
+        ipv4_address: 192.168.${STUDENT_ID}.53
+    restart: unless-stopped
+    
+  db:
+    image: vulhub/mysql:5.5.23
+    container_name: db
+    hostname: db.borealis.local
+    networks:
+      parc:
+        ipv4_address: 192.168.${STUDENT_ID}.54
+    restart: unless-stopped
