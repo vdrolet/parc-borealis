@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boréalis Imprimerie — Impression professionnelle</title>
+<style>
+  :root{
+    --paper:#f2ede3;
+    --ink:#1c1a17;
+    --ink-soft:#4a453d;
+    --press-red:#a4302b;
+    --press-red-dark:#7c2320;
+    --line:#d8cfbc;
+    --card:#faf7f0;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    line-height:1.6;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(0,0,0,0.035) 1px, transparent 0);
+    background-size:14px 14px;
+  }
+
+  header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    border-bottom:3px solid var(--ink);
+    padding:1.4rem 2rem;
+    display:flex;
+    align-items:center;
+    gap:1.1rem;
+    background:var(--paper);
+  }
+
+  .logo-mark{
+    width:46px;
+    height:46px;
+    flex-shrink:0;
+  }
+
+  .brand{
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
+  }
+
+  .brand-name{
+    font-size:1.4rem;
+    letter-spacing:0.02em;
+    font-weight:700;
+  }
+
+  .brand-sub{
+    font-family:"Courier New",monospace;
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--press-red);
+    margin-top:0.15rem;
+  }
+
+  nav{
+    margin-left:auto;
+    display:flex;
+    gap:1.6rem;
+    font-family:"Courier New",monospace;
+    font-size:0.78rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+  }
+
+  nav a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding-bottom:3px;
+    border-bottom:2px solid transparent;
+    transition:border-color .15s ease, color .15s ease;
+  }
+
+  nav a:hover, nav a:focus-visible{
+    color:var(--press-red);
+    border-color:var(--press-red);
+  }
+
+  .cta{
+    font-family:"Courier New",monospace;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    background:var(--press-red);
+    color:var(--paper);
+    padding:0.55rem 1.1rem;
+    text-decoration:none;
+    border:1px solid var(--press-red);
+    transition:background .15s ease;
+  }
+
+  .cta:hover{background:var(--press-red-dark);}
+
+  main{max-width:1040px;margin:0 auto;padding:0 2rem;}
+
+  .hero{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:2.5rem;
+    align-items:center;
+    padding:4rem 0 3.5rem;
+    border-bottom:1px solid var(--line);
+  }
+
+  .hero-tag{
+    font-family:"Courier New",monospace;
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--press-red);
+    margin-bottom:0.9rem;
+  }
+
+  .hero h1{
+    font-size:2.9rem;
+    line-height:1.08;
+    margin-bottom:1rem;
+  }
+
+  .hero p{
+    color:var(--ink-soft);
+    max-width:44ch;
+    margin-bottom:1.6rem;
+  }
+
+  .hero-actions{display:flex;gap:1rem;align-items:center;}
+
+  .link-quiet{
+    font-family:"Courier New",monospace;
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+  }
+
+  .link-quiet:hover{color:var(--press-red);border-color:var(--press-red);}
+
+  .hero-visual{
+    aspect-ratio:1/1;
+    border:3px solid var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--card);
+    position:relative;
+  }
+
+  .hero-visual::before{
+    content:"";
+    position:absolute;
+    inset:10px;
+    border:1px solid var(--line);
+  }
+
+  .hero-visual svg{width:55%;height:55%;}
+
+  section.block{
+    padding:3.4rem 0;
+    border-bottom:1px solid var(--line);
+  }
+
+  section.block:last-of-type{border-bottom:none;}
+
+  .block-tag{
+    font-family:"Courier New",monospace;
+    font-size:0.7rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--press-red);
+    margin-bottom:0.5rem;
+  }
+
+  .block-title{
+    font-size:1.8rem;
+    margin-bottom:2rem;
+    max-width:26ch;
+  }
+
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.4rem;
+  }
+
+  .service-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:1.5rem 1.4rem;
+  }
+
+  .service-num{
+    font-family:"Courier New",monospace;
+    font-size:0.75rem;
+    color:var(--press-red);
+    margin-bottom:0.8rem;
+  }
+
+  .service-card h3{
+    font-size:1.05rem;
+    margin-bottom:0.5rem;
+  }
+
+  .service-card p{
+    color:var(--ink-soft);
+    font-size:0.92rem;
+  }
+
+  .about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2.5rem;
+    align-items:start;
+  }
+
+  .about-grid p{
+    color:var(--ink-soft);
+    margin-bottom:1rem;
+  }
+
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1rem;
+  }
+
+  .stat{
+    border-top:2px solid var(--ink);
+    padding-top:0.6rem;
+  }
+
+  .stat-num{
+    font-size:1.9rem;
+    font-weight:700;
+    display:block;
+  }
+
+  .stat-label{
+    font-family:"Courier New",monospace;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-soft);
+  }
+
+  .contact-block{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2.5rem;
+  }
+
+  .contact-info div{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding:0.6rem 0;
+    font-size:0.94rem;
+  }
+
+  .contact-info span:last-child{
+    color:var(--ink-soft);
+    font-family:"Courier New",monospace;
+    font-size:0.85rem;
+    text-align:right;
+  }
+
+  .stamp-box{
+    border:1px solid var(--press-red);
+    padding:1.4rem;
+    align-self:start;
+  }
+
+  .stamp-box p{
+    font-family:"Courier New",monospace;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--press-red);
+    margin-bottom:0.5rem;
+  }
+
+  .stamp-box strong{
+    display:block;
+    font-family:"Iowan Old Style",Georgia,serif;
+    font-size:1.1rem;
+    color:var(--ink);
+    text-transform:none;
+    letter-spacing:0;
+  }
+
+  footer{
+    text-align:center;
+    font-family:"Courier New",monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    letter-spacing:0.05em;
+    padding:2rem 1rem 2.6rem;
+    text-transform:uppercase;
+  }
+
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr;padding-top:2.5rem;}
+    .hero-visual{max-width:220px;justify-self:center;}
+    .services-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-block{grid-template-columns:1fr;}
+    .stats{grid-template-columns:1fr 1fr;}
+    nav{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="logo-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Boréalis Imprimerie">
+    <rect x="4" y="4" width="92" height="92" fill="none" stroke="#1c1a17" stroke-width="3"/>
+    <path d="M20 78 L50 22 L80 78" fill="none" stroke="#a4302b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <line x1="32" y1="58" x2="68" y2="58" stroke="#1c1a17" stroke-width="4"/>
+  </svg>
+  <div class="brand">
+    <span class="brand-name">Boréalis Imprimerie</span>
+    <span class="brand-sub">Depuis 1994</span>
+  </div>
+  <nav>
+    <a href="#services">Services</a>
+    <a href="#apropos">À propos</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="cta" href="#contact">Demander une soumission</a>
+</header>
+
+<main>
+
+  <div class="hero" id="accueil">
+    <div>
+      <div class="hero-tag">Imprimerie commerciale — Québec</div>
+      <h1>L'impression, sans compromis sur la qualité.</h1>
+      <p>Boréalis Imprimerie accompagne les entreprises et organismes d'ici depuis plus de trente ans, de la carte d'affaires à la production grand format.</p>
+      <div class="hero-actions">
+        <a class="cta" href="#contact">Nous écrire</a>
+        <a class="link-quiet" href="#services">Voir les services</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="4" y="4" width="92" height="92" fill="none" stroke="#1c1a17" stroke-width="2"/>
+        <path d="M20 78 L50 22 L80 78" fill="none" stroke="#a4302b" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <line x1="32" y1="58" x2="68" y2="58" stroke="#1c1a17" stroke-width="3"/>
+      </svg>
+    </div>
+  </div>
+
+  <section class="block" id="services">
+    <div class="block-tag">Ce que nous faisons</div>
+    <h2 class="block-title">Des services d'impression pensés pour votre entreprise</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>Impression numérique</h3>
+        <p>Petits et moyens tirages, délais courts, qualité constante pour vos documents d'affaires.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Impression offset</h3>
+        <p>Grands volumes et rendu couleur supérieur pour vos publications et matériel promotionnel.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Grand format</h3>
+        <p>Affiches, bannières et signalisation pour points de vente, salons et événements.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Papeterie d'affaires</h3>
+        <p>Cartes professionnelles, en-têtes, enveloppes — l'image de marque bien imprimée.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <h3>Reliure et finition</h3>
+        <p>Pliage, agrafage, reliure spirale et pelliculage pour un produit fini professionnel.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <h3>Conseil pré-presse</h3>
+        <p>Vérification de fichiers et accompagnement pour garantir un résultat impeccable.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="apropos">
+    <div class="block-tag">Notre atelier</div>
+    <h2 class="block-title">Une équipe locale, un savoir-faire établi</h2>
+    <div class="about-grid">
+      <div>
+        <p>Fondée à Montréal, Boréalis Imprimerie sert les entreprises, organismes publics et commerces de la région depuis 1994. Notre atelier combine équipement moderne et expertise artisanale pour livrer un travail soigné, à chaque commande.</p>
+        <p>Nous travaillons directement avec nos clients, de la conception du fichier jusqu'à la livraison, pour éviter les mauvaises surprises et respecter les échéanciers serrés.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-num">30+</span>
+          <span class="stat-label">Années d'activité</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">1200+</span>
+          <span class="stat-label">Clients servis</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">48h</span>
+          <span class="stat-label">Délai standard</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="block-tag">Nous joindre</div>
+    <h2 class="block-title">Demandez votre soumission</h2>
+    <div class="contact-block">
+      <div class="contact-info">
+        <div><span>Téléphone</span><span>514-555-0142</span></div>
+        <div><span>Courriel</span><span>info@borealis-imprimerie.local</span></div>
+        <div><span>Adresse</span><span>1420 rue des Presses, Montréal QC</span></div>
+        <div><span>Heures</span><span>Lun–Ven, 8h–17h</span></div>
+      </div>
+      <div class="stamp-box">
+        <p>Soumission rapide</p>
+        <strong>Réponse en moins de 24 heures ouvrables pour toute demande par courriel.</strong>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Boréalis Imprimerie — Tous droits réservés
+</footer>
+
+</body>
+</html>
